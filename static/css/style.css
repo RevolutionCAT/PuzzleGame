@@ -1,0 +1,48 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;     /* vertical centering */
+    min-height: 90vh;       /* so vertical centering has room to work with */
+}
+
+#navbar {
+    width: 100%;
+    background-color: #333;
+    padding: 10px;
+}
+
+#game-area {
+    background-color: #f0f0f0;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+#page-footer {
+    width: 100%;
+    background-color: #333;
+    padding: 10px;
+    margin-top: auto; /* pushes footer to bottom if there's leftover vertical space */
+}
+
+
+
+#puzzle-container {
+    display: flex;
+    align-items: flex-end; /* bars align to the bottom, growing upward */
+    width: 60vw;      /* 60% of viewport width, scales with screen size */
+    max-width: 800px; /* don't let it get absurdly huge on ultrawide monitors */
+    min-width: 300px; /* don't let it get too cramped on small screens */
+}
+
+.bar {
+    background-color: rgb(155, 199, 236);
+}
+
+.some-element {
+    margin-top: 10px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    margin-left: 20px;
+    margin: 10px 20px 10px 20px; /* top, right, bottom, left */
+}
+
