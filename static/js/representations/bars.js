@@ -1,22 +1,29 @@
 
-
 export function RenderPuzzle(container, puzzle) {
     container.innerHTML = "";
+    
+    const containerWidth = container.clientWidth;
+    const barCount = puzzle.length;
 
-    const containerWidth = 0.6;
-    const gapRatio = 0.1; //10% of bar's width
-    const barsAmount = puzzle.length;
-    const barWidth = containerWidth / (barsAmount + (barsAmount - 1) * gapRatio);
-    const gapWidth = barWidth * gapRatio;
-    console.log("containerWidth:", containerWidth);
-    console.log("barWidth:", barWidth, "gapWidth:", gapWidth);
+    const GAP_RATIO = 0.1;
+    const barWidth = containerWidth / (barCount + (barCount - 1) * GAP_RATIO);
+    const gap = barWidth * GAP_RATIO;
+    const maxValue = Math.max(...puzzle);
 
-    for (let i = 0; i < puzzle.length; i++) {
-        const bar = document.createElement("div");
-        bar.classList.add("bar");
-        bar.style.width = `${barWidth}px`;
-        bar.style.height = `${puzzle[i] * 10}px`;
-        console.log(`bar ${i} height:`, puzzle[i] * 10);
-        container.appendChild(bar);
+    container.style.gap = `${gap}px`;
+
+    for (const value of puzzle) {
+        container.appendChild(CreateBar(value, barWidth, maxValue));
     }
+}
+
+
+function CreateBar(value, width, maxValue) {
+    const bar = document.createElement("div");
+
+    bar.classList.add("bar");
+    bar.style.width = `${width}px`;
+    bar.style.height = `${(value / maxValue) * 100}%`;
+
+    return bar;
 }
