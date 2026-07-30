@@ -1,55 +1,97 @@
 body {
     display: flex;
-    flex-direction: column;
-    align-items: center;     /* vertical centering */
-    min-height: 90vh;       /* so vertical centering has room to work with */
-    height: 100%;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
     overflow: hidden;
+}
+
+#page-wrapper {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
 }
 
 #nav-toggle {
     position: fixed;
-    top: 10px;
-    left: 10px;
+    top: 0px;
+    left: 0px;
+    background-color: #7c7b7b;
+    color: white;
+    border: none;
+    padding: 5px 7px;
+    cursor: pointer;
 }
 
 #game-area {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    background-color: #f4f4f4;
+    width: 50%;
+    height: 70%;
+    max-width: 800px;
+    border-radius: 5px;
 }
 
 
 #puzzle-container {
     display: flex;
     align-items: flex-end; /* bars align to the bottom, growing upward */
-    width: 60vw;      /* 60% of viewport width, scales with screen size */
-    height: 50vh;
+    width: 90%;      /* 60% of viewport width, scales with screen size */
+    height: 83%;
     max-width: 800px; /* don't let it get huge on ultrawide monitors */
     min-width: 300px; /* don't let it get too cramped on small screen */
+    margin: 20px auto 0;
 }
 
-#submit-button {
-    position: absolute;
-    right: -50px; /* sits just below, outside the container's own box */
-    left: 50%;
-    transform: translateX(-50%); /* centers it horizontally */
+#info-box {
+    width: 96%;
+    margin: 1%;
+    padding: 10px;
+    background-color: #e8e6e6;
+    border-radius: 5px;
+    flex-grow: 1; /* takes up all remaining vertical space in #game-area */
 }
 
 #submit-box {
-    padding: 10px 20px;
+    position: relative;
+    top: 32.85%;
+    right: 3%;
 }
+
+#undo-box {
+    position: relative;
+    bottom: 32.75%;
+    left: 3%;
+}
+
+
+
+button {
+    margin: 40px;
+    padding: 10px 20px;
+    background-color: #9c9384;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #333;
+}
+
+
 
 .bar {
     background-color: rgb(155, 199, 236);
+    border-radius: 5px;
 }
-
-.some-element {
-    margin-top: 10px;
-    margin-right: 20px;
-    margin-bottom: 10px;
-    margin-left: 20px;
-    margin: 10px 20px 10px 20px; /* top, right, bottom, left */
-}
-
