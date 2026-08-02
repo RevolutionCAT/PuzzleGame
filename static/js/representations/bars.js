@@ -1,6 +1,16 @@
+const dragThreshold = 5;
+let currentContainer = null;
+let currentPuzzle = null;
+let funcOnSwap = null;
+let draggedBar = null;
+let mouseOffsetX = 0;
 
-export function RenderPuzzle(container, puzzle) {
+
+export function RenderPuzzle(container, puzzle, onSwap) {
     container.innerHTML = "";
+    currentContainer = container;
+    currentPuzzle = puzzle;
+    funcOnSwap = onSwap;
     
     const containerWidth = container.clientWidth;
     const barCount = puzzle.length;
@@ -32,18 +42,50 @@ function CreateBar(value, width, index, maxValue) {
 }
 
 
+function FindClosestBar(pointerX, draggedBar) {
+    const bars = currentContainer.querySelectorAll(".bar");
+    let closestBar = null;
+    let closestDistance = Infinity;
 
-let draggedBar = null;
-const dragThreshold = 5;
-let offsetX = 0;
+    for (const bar of bars) {
+        if (bar === draggedBar) continue;
+
+        const rect = bar.getBoundingClientRect();
+        const barCentreX = rect.left + (rect.width / 2);
+        const distance = Math.abs(pointerX - barCentreX);
+
+        if (distance < closestDistance) {
+            closestDistance = distance;
+            closestBar = bar;
+        }}
+    return closestBar;
+}
+
+
+function SwapBars(draggedBar, targetBar) {
+    const indexBar1 = Number(draggedBar.dataset.index);
+    const indexBar2 = Number(targetBar.dataset.index);
+
+    [currentPuzzle[indexBar1], currentPuzzle[indexBar2]] = [currentPuzzle[indexBar2], currentPuzzle[indexBar1]];
+
+    RenderPuzzle(currentContainer, currentPuzzle, funcOnSwap);
+    if (funcOnSwap) {
+        funcOnSwap(currentPuzzle);
+    }
+
+}
+
+
+
 
 document.addEventListener("pointermove", (event) => {
     if (draggedBar === null) 
         return;
     
-    offsetX += event.movementX;
-    draggedBar.style.transform = `translateX(${offsetX}px)`;
+    mouseOffsetX += event.movementX;
+    draggedBar.style.transform = `translateX(${mouseOffsetX}px)`;
 });
+
 
 document.addEventListener("pointerup", (event) => {
     if (draggedBar === null) 
@@ -52,18 +94,22 @@ document.addEventListener("pointerup", (event) => {
     draggedBar.classList.remove("moving");
     draggedBar.style.transform = "";
 
-    if (Math.abs(offsetX) < dragThreshold) { // click
+    if (Math.abs(mouseOffsetX) < dragThreshold) { // click
         draggedBar.classList.toggle("selected");
     } 
     else { // drag
-        // swap logic  here later
+        const targetBar = FindClosestBar(event.clientX, draggedBar);
+        if (targetBar !== null) {
+            SwapBars(draggedBar, targetBar);
+            }
     }
-
     draggedBar = null;
 })
 
+
 function MouseDownOnBar(event) {
     draggedBar = event.currentTarget;
-    offsetX = 0;
+    mouseOffsetX = 0;
     event.currentTarget.classList.add("moving");
 }
+

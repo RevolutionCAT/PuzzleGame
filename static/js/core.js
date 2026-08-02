@@ -111,8 +111,9 @@ async function IsValid(puzzle, compatibleWith, type, minDifficulty=4) {
 async function ManageVisuals(puzzle, mode, totalDifficulty) {
     const container = document.getElementById("puzzle-container");
     const representation = await LoadRepresentation(mode);
-    representation.RenderPuzzle(container, puzzle);
-
+    representation.RenderPuzzle(container, puzzle, (updatedPuzzle) => {
+        // after swap - this
+    });
 }
 
 
