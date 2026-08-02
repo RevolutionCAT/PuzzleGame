@@ -43,9 +43,9 @@ body {
 #puzzle-container {
     display: flex;
     align-items: flex-end; /* bars align to the bottom, growing upward */
-    width: 90%;      /* 60% of viewport width, scales with screen size */
+    width: 90%;
     height: 83%;
-    max-width: 800px; /* don't let it get huge on ultrawide monitors */
+    max-width: 800px; /* don't let it get huge on rly wide monitors */
     min-width: 300px; /* don't let it get too cramped on small screen */
     margin: 20px auto 0;
 }
@@ -92,6 +92,21 @@ button:hover {
 
 
 .bar {
+    box-sizing: border-box;
     background-color: rgb(155, 199, 236);
     border-radius: 5px;
+}
+
+.bar:hover {
+    border: solid 2px #2c2b2b;
+}
+
+.bar.selected {
+    background-color: rgb(236, 155, 155);
+    border: solid 2px #2c2b2b;
+}
+
+.bar.moving {
+    background-color: rgb(155, 236, 155);
+    border: solid 2px #2c2b2b;
 }

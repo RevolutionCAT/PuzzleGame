@@ -80,7 +80,8 @@ function SelectMode(baseSeed, modes) {
     const localSeed = GenerateSeed(baseSeed+"-SelectMode");
     const index = localSeed % modes.length;
     const selected = modes[index];
-    return selected;
+    const fakeSelected = "bars";
+    return fakeSelected;
 }
 
 
