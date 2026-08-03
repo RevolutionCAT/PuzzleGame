@@ -40,15 +40,14 @@ export async function Prepare() {
 
     const simulationResults = algorithm.Simulate(puzzle);
     const totalDifficulty = simulationResults.puzzleDifficulty + algorithm.recognizability
+    const puzzleSteps = simulationResults.steps;
 
-
-    // + функция которая примет выбранный в итоге пазл (нерешенный) и отправит запрос в html на рендер по методу.js
-    await ManageVisuals(puzzle, mode, totalDifficulty);
+    return { puzzle, mode, puzzleSteps, totalDifficulty };
 }
 
 
 
-
+//=================================================Processing===================================================================
 
 function SelectAlgorithm(baseSeed, algorithms) {
     let all_algorithms = [];
@@ -106,21 +105,29 @@ async function IsValid(puzzle, compatibleWith, type, minDifficulty=4) {
 }
 
 
-// =====================================================================================================
+//===========================================Visuals==========================================================
 
-async function ManageVisuals(puzzle, mode, totalDifficulty) {
+export async function ManageVisuals(puzzle, mode, totalDifficulty, OnMove) {
     const container = document.getElementById("puzzle-container");
     const representation = await LoadRepresentation(mode);
-    representation.RenderPuzzle(container, puzzle, (updatedPuzzle) => {
-        // after swap - this
-    });
+    representation.RenderPuzzle(container, puzzle, OnMove)
 }
-
-
-
 
 
 async function LoadRepresentation(mode) {
     const representation = await import(`./representations/${mode}.js`);
     return representation;
+}
+
+//=========================================Buttons=======================================================
+
+let iteration = 0;
+function OnSubmit() {
+    // the list of player's moves AND amount of times guessed is returned
+    // +function (CompareMoves) that compares them with the algorithm's moves
+    // +function (ApplyChanges) that: cleares the undo list, marks all the right/wrong answers visually
+    // and now everything is as new but with user's guess considered.
+    iteration += 1
+    CheckMoves(allPlayerMovesList, iteration)
+
 }

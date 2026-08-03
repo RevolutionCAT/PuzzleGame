@@ -1,0 +1,80 @@
+ONLY FOR BARS MODE:
+
+--     will be added (coding: "first letter|number(s) of interaction"):
+
+swap - "s1-2"
+insert - "i1-2"     == insert in between bars 1 and 2. the inserted bar becomes bar #2
+pivot - "p3"        == choose bar #3 as a pivot
+select - "u1-2-3-4"         == (u stands for Unite)     select bars: 1, 2, 3, 4
+split - "l1-2"        == all the bars (before 1) OR (after 2) included are being interacted with, others ignored
+go - "g1"          == e.g. after setting pivot, the algorithm will choose what part it will go to
+
+
+
+--     decide on:
+
+compare - "c1-2"
+create - "mX"    == for fun mode IF NEEDED.  m means Make, X is the value (1-1000+) itself
+
+
+
+--     for fun modes:
+
+delete - "d1"
+modify - "vX"   == v stands for value, X is the value itself. can be (1-1000+) etc depending on mode.
+
+
+
+
+
+
+HOW THEY WILL WORK:
+
+- swap:
+already implemented
+
+- insert:
+you will drag the bar in between the bars and it will visually offer you to insert the bar between two bars. 
+same offering as when swapping bars - just a variation of visual.
+when inserted, the right-side bars will move to the right one place (or however the user inserted) and the inserted bar(s) 
+take their initial place.
+
+- pivot:
+visually, a dot will appear above the bar. 
+user will click (where?) and the pivot will be set.
+
+- select:
+same select as e.g. in windows with left click.
+left click on button, hold it and drag the mouse. select the bars you needed (if all bars selected, do not do anything after).
+after pointerup, the move will be considered made - bars will be visually selected, to unselect you must click undo button,
+but before pointerup DO NOT count it as a move.
+
+- split:
+will look like a line between two bars. 
+to create the line, user clicks above the bars but between them and moves the mouse straight down. then the line will appear.
+HOWEVER, THERES A PROBLEM: distinguish between selection and splitting. similar problem to select vs drag.
+
+- go:
+will be considered automatically, for example:
+user splits the bars in two and STARTS interacting with the right side. before any move is recorded, the "gX" will be recorded
+and only after that the rest of the moves will also be recorded.
+visually, e.g. after splitting the bars, if the user starts making moves on the left side, and algorithm is doing it on the right
+side, then the whole left side(background) will be coloured yellow.
+IF there is no go-to move, then (think on that in the future..) the whole background will be coloured gray (??)
+
+- delete:
+user drags the bar down. visually, it slides down and the rest of the bars get bigger to match the size of the puzzle-container.
+if that was a correct move, smth happens visually idk. if that was not - smth happens visually but with a different colour.
+if not really correct, then yellow but same visuals idk
+
+- modify:
+user will drag the top of the bar and then they will drag it down or up, modifying the bar's value.
+THE MOVE WILL BE COUNTED AFTER POINTERUP!!!
+the lowest possible value will be 1 - NOT ZERO.
+
+
+?
+- create:
+there will be a + button, after clicking it, a bar with some value will appear, and user will be able to legally modify it
+without flagging the modify move. thus they will only be able to modify it after creation. if was left unmodified - the value
+the bar appeared with will be considered the legally modified value of the bar and the create move will be registered with it.

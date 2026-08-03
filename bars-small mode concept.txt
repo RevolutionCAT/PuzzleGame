@@ -1,0 +1,98 @@
+general concept:
+- there will be 6-10 bars. 
+- the user will move the bars to get an idea of what algorithm is guessed.
+- after moving the bars, the user will click submit button. after this, the game will reveal what is correct or not.
+- the game will allow only limited amount guesses.
+- there will be a "dictionary" of algorithms that will include all info about them AND visualization of them.
+
+
+
+general possible problems to solve:
+
+- the amount of guesses is intended to stay limited, however it is impossible since some algorithms may have too much of them
+- the game is too solvable. after the user guesses the first iteration, they most likely know what algorithm it is.
+- do bar values for iteration reveal too much? do we still need them if one of the ideas accepted will work perfectly?
+- if the user knows what algorithm is guessed exactly, how do they actually guess this algorithm? its not a good design if
+  the user will have to build all the exact steps no matter how long the algorithm is.
+
+
+
+possible fixes of the general problems:
+
+- ignore it and set the max amount of guesses regarding the algorithm? this is because it wont really help the user to guess the
+  algorithm if they have 20 attempts available. it makes the game unfair and eventually too solvable if the attempts stay 
+  unlimited. thus the amount of guesses is fine to keep around 8, counting the right guess as a guess too, no exceptions.
+- it may be ignored ONLY if there are too many similar algorithms, because after first iteration there are still options to 
+  choose from. otherwise this is most likely a massive issue.
+- ? however, it depends on the idea used in the end.
+- e.g. can implement a window that lists all the available algorithms for the current difficulty/mode, and the user will choose 
+  from them? the user can choose an algorithm from that list and it will count as a guess. however, need to think about 
+  "what if user both rearranges the array AND tries to guess what algorithm is guessed?"
+  ideas for fixing that:
+  - count it as two separate guesses - the algorithm guessed will have a priority, and the rearrangement of the bars will not.
+  - only count the list guess, fully ignoring bars rearrangement? however, its not good to ignore it. if considered - think of it.
+
+
+
+
+============================================ more focused ==================================================
+
+
+idea 1:
+
+- after every submit, the puzzle will be reverted back to its initial unsorted state. = similar to worlde, since
+  after one guess you are back to the empty space.
+- the player's guess will be visually moved somewhere e.g. upwards (and made smaller) so that the player does not forget
+  what they just guessed. = similar to worlde.
+
+Problems:
+- the game will not check iterations. instead it will check something else? because it becomes impossible to compare iterations,
+  since the game is reversing the puzzle back to its unsorted state
+- thus you cannot really reveal the values of the bars, since there are no iterations.
+
+
+
+
+idea 2: 
+
+- idea 1 but with this addition + some problem fix:
+- after the exactly correct guess of the iteration, the game will revert the puzzle not to unsorted state, but to the state
+  exactly after the first iteration ended. = it is still similar to wordle, since the game is going back to some previous state
+  whatsoever.
+- same iteration thing will be applied to all the further iterations.
+- visually, it will be told what iteraion the puzzle goes back to. 
+
+Problems: 
+- previous user guesses become useless after the game reverts the puzzle to somewhat-sorted state.
+
+
+
+
+========================================= working on ==================================================
+
+
+idea 3 (final?):
+- the player will submit their guesses, not iterations. thus, the moves will be submitted only.
+
+- however, if the guesses (or the first part of them, lets say) will match exactly the first iteration, then the game will 
+  start next attempt from exactly the point after 1 iteration. 
+  but that needs to be mentioned somewhere on the screen too. 
+
+- if the user missed e.g. one step of the iteration, the game will not still start the next guess from the next iteration. 
+  the user doesnt lose much, since they are on  the right track most likely. 
+
+- however, maybe the game can continue from the exact state the player guessed at, only if all steps matched the 
+  algorithm's steps exactly, otherwise it goes back to the base-state. this is more fair and much less punishing. 
+
+- the same idea can be applied to the "change log" of what moves the player just did. for example player's guesses will be 
+  stored in a space  above the puzzle, but it will be cleared after the game sets the puzzle starting state as after the first
+  iteration.
+  - so like they've finally guessed on their third attempt how the first iteration should look like, and they submit it, and after
+    that their guess log above gets cleared out, and the next attempt starts from after the first iteration is finished.
+
+- guess limit i believe will be good to have like 6/7/8 attempts - fixed, but it will be chosen later
+  for each algorithm type, but 6-8 is at least for the bars gamemode.
+
+- i can allow to guess the actual algorithm from the list. 
+  - e.g. after the player have made 3 attempts out of their 6-8 attempts.
+  - AND also added to above, if the player have guessed one iteration completely (?).

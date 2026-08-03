@@ -95,6 +95,8 @@ button:hover {
     box-sizing: border-box;
     background-color: rgb(155, 199, 236);
     border-radius: 5px;
+    transition: transform 0.15s ease, background-color 0.15s ease; /* DO NOT use it for when the bar is being moved around. */
+    /* later configure it (above) so that it only works when the bar is lifted up/down, NOT horizontally.  */
 }
 
 .bar:hover {

@@ -1,16 +1,16 @@
 const dragThreshold = 5;
 let currentContainer = null;
 let currentPuzzle = null;
-let funcOnSwap = null;
+let FuncOnMove = null;
 let draggedBar = null;
 let mouseOffsetX = 0;
 
 
-export function RenderPuzzle(container, puzzle, onSwap) {
+export function RenderPuzzle(container, puzzle, onMove) {
     container.innerHTML = "";
     currentContainer = container;
     currentPuzzle = puzzle;
-    funcOnSwap = onSwap;
+    FuncOnMove = onMove;
     
     const containerWidth = container.clientWidth;
     const barCount = puzzle.length;
@@ -68,22 +68,22 @@ function SwapBars(draggedBar, targetBar) {
 
     [currentPuzzle[indexBar1], currentPuzzle[indexBar2]] = [currentPuzzle[indexBar2], currentPuzzle[indexBar1]];
 
-    RenderPuzzle(currentContainer, currentPuzzle, funcOnSwap);
-    if (funcOnSwap) {
-        funcOnSwap(currentPuzzle);
+    RenderPuzzle(currentContainer, currentPuzzle, FuncOnMove);
+    if (FuncOnMove) {
+        FuncOnMove(currentPuzzle);
     }
 
 }
 
 
-
+// ========== event listeners ============
 
 document.addEventListener("pointermove", (event) => {
     if (draggedBar === null) 
         return;
     
     mouseOffsetX += event.movementX;
-    draggedBar.style.transform = `translateX(${mouseOffsetX}px)`;
+    draggedBar.style.transform = `translate(${mouseOffsetX}px, -20px)`;
 });
 
 
@@ -104,6 +104,7 @@ document.addEventListener("pointerup", (event) => {
             }
     }
     draggedBar = null;
+    
 })
 
 

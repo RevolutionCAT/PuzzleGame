@@ -13,8 +13,7 @@ export function Simulate(original_puzzle) {
         swapped = false;
         let iteration = [];
         for (let j = 0; j < puzzleLength-i-1; j++) {
-            iteration.push(`g${j}`);
-            iteration.push(`c${j}-${j+1}`);
+          //  iteration.push(`c${j}-${j+1}`);
             if (puzzle_copy[j] > puzzle_copy[j + 1]) {
                 [puzzle_copy[j], puzzle_copy[j + 1]] = [puzzle_copy[j + 1], puzzle_copy[j]];
                 swapped = true;
