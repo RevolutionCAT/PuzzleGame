@@ -79,7 +79,7 @@ function SelectMode(baseSeed, modes) {
     const localSeed = GenerateSeed(baseSeed+"-SelectMode");
     const index = localSeed % modes.length;
     const selected = modes[index];
-    const fakeSelected = "bars";
+    const fakeSelected = "bars_small";
     return fakeSelected;
 }
 
@@ -115,7 +115,7 @@ export async function ManageVisuals(puzzle, mode, totalDifficulty, OnMove) {
 
 
 async function LoadRepresentation(mode) {
-    const representation = await import(`./representations/${mode}.js`);
+    const representation = await import(`./visualisations/${mode}/Manage.js`);
     return representation;
 }
 

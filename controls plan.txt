@@ -31,9 +31,10 @@ modify - "vX"   == v stands for value, X is the value itself. can be (1-1000+) e
 HOW THEY WILL WORK:
 
 - swap:
-already implemented
+IMPLEMENTED
 
 - insert:
+IMPLEMENTED PARTIALLY
 you will drag the bar in between the bars and it will visually offer you to insert the bar between two bars. 
 same offering as when swapping bars - just a variation of visual.
 when inserted, the right-side bars will move to the right one place (or however the user inserted) and the inserted bar(s) 
@@ -44,7 +45,7 @@ visually, a dot will appear above the bar.
 user will click (where?) and the pivot will be set.
 
 - select:
-same select as e.g. in windows with left click.
+same select as e.g. in Windows with left click and mouse drag.
 left click on button, hold it and drag the mouse. select the bars you needed (if all bars selected, do not do anything after).
 after pointerup, the move will be considered made - bars will be visually selected, to unselect you must click undo button,
 but before pointerup DO NOT count it as a move.

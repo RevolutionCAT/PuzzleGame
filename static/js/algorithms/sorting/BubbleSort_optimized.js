@@ -1,4 +1,4 @@
-export const compatibleWith = ["bars", "numbers"];
+export const compatibleWith = ["bars_small", "numbers"];
 export const recognizability = 2.0;
 
 export function Simulate(original_puzzle) {
