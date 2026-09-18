@@ -96,11 +96,12 @@ button:hover {
     background-color: rgb(155, 199, 236);
     border-radius: 5px;
     user-select: none;
+    transition: transform 0.15s ease, background-color 0.15s ease;
 }
 
 .bar:hover {
     border: solid 2px #2c2b2b;
-    transition: transform 0.15s ease, background-color 0.15s ease;
+    /* transition: transform 0.15s ease, background-color 0.15s ease; */
 }
 
 .bar.selected {
@@ -112,16 +113,4 @@ button:hover {
     background-color: rgb(155, 236, 155);
     border: solid 2px #2c2b2b;
     will-change: transform;
-}
-
-
-.floating-bar {
-    position: fixed;
-    z-index: 9999999;
-    pointer-events: none;
-    will-change: transform;
-}
-
-.bar-placeholder {
-    opacity: 0;
 }

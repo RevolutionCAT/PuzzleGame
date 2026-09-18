@@ -4,26 +4,68 @@ import {Prepare, ManageVisuals} from "./core.js"
 
 
 async function Game() {
-    const { puzzle, mode, algorithm, puzzleSteps, totalDifficulty } = await Prepare();
+    const { puzzle, mode, algorithm, puzzleSteps, totalPuzzleDifficulty } = await Prepare();
 
-    let allPlayerMovesList = [];
-    function OnMove(currentPlayerMoves) {
-        allPlayerMovesList.push(currentPlayerMoves);
+    let allPlayerMoves = [];
+    let currentPlayerMoves = [];
+    let playerMovesHistory = [];
+
+
+    // =========================== User interaction =============================
+    function OnMove(action, stateBefore) {
+        currentPlayerMoves.push(action);
+        playerMovesHistory.push({ action, stateBefore });
     }
 
-    await ManageVisuals(puzzle, mode, totalDifficulty, OnMove);
+    function OnSubmit() {
+        if (currentPlayerMoves.length === 0) {
+            console.log("Rejected: You have not done any changes!");
+            return;
+        }
 
+        console.log(currentPlayerMoves);
+        allPlayerMoves.push(...currentPlayerMoves);
+        currentPlayerMoves = [];
+        playerMovesHistory = [];
+    }
+
+    function OnUndo() {
+        if (playerMovesHistory.length === 0) {
+            console.log("Error: You have no actions to undo!")
+            return;
+        }
+
+        const previousMove = playerMovesHistory.pop();
+        currentPlayerMoves.pop();
+        representation.RestoreState(previousMove.stateBefore);
+    }
+
+    function OnRedo() {
+        if (redoPlayerMoves.length === 0) {
+            console.log("Error: You haven't undone any actions!")
+            return;
+        }
+        currentPlayerMoves.push(redoPlayerMoves.pop());
+        redoPlayerMoves.pop();
+    }
+    
+
+    // ==================== Event listeners ===============================
     document.getElementById("submit-button").addEventListener("click", () => {
-        OnSubmit(allPlayerMovesList, puzzleSteps);
-        allPlayerMovesList = [];
+        OnSubmit();
     });
 
+
     document.getElementById("undo-button").addEventListener("click", () => {
-        // go step back on the moves list
-        // pop the move from that list
-        // manage visuals for that ig
-        // push the move into redo list
+        OnUndo();
     })
+
+    document.getElementById("redo-button").addEventListener("click", () => {
+        OnRedo();
+    })
+
+    const representation = await ManageVisuals(puzzle, mode, totalPuzzleDifficulty, OnMove);
 }
+
 
 Game();

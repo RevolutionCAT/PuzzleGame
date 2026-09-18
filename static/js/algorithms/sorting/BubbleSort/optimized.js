@@ -3,7 +3,7 @@ export const recognizability = 2.0;
 
 export function Simulate(original_puzzle) {
     const puzzleLength = original_puzzle.length;
-    const puzzle_copy = [...original_puzzle]; // copies all the elements into array called puzzle
+    const puzzle_copy = [...original_puzzle]; // copies all the elements into new array 
     let swapped;
     let steps = {};
     let puzzleDifficulty = 0.0;

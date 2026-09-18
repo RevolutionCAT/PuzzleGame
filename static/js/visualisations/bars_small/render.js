@@ -33,6 +33,5 @@ function CreateBar(value, width, index, maxValue) {
     bar.style.width = `${width}px`;
     bar.style.height = `${(value / maxValue) * 100}%`;
     
-   // bar.addEventListener("pointerdown", MouseDownOnBar);
     return bar;
 }

@@ -13,14 +13,13 @@ _cache = {
 
 
 
-KNOWN_SUFFIXES = ["_default", "_optimized", "_unoptimized", "_biDirectional"]
+KNOWN_SUFFIXES = ["default", "optimized", "unoptimized", "biDirectional"]
 
 def ManageVariations(filename):
     for suffix in KNOWN_SUFFIXES:
         if filename.endswith(suffix):
             base = filename[: -len(suffix)]
-            variant = suffix.lstrip("_")
-            return base, variant
+            return base, suffix
 
     return filename, "default"
 
@@ -34,16 +33,19 @@ def ListAlgorithms():
             continue
 
         variations_of = {}
-        for filename in os.listdir(type_path):
-            if not filename.endswith(".js"):
+
+        for base_name in sorted(os.listdir(type_path)):
+            base_path = os.path.join(type_path, base_name)
+            if not os.path.isdir(base_path):
                 continue
 
-            algorithm_name = filename[:-3]
-            base, variation = ManageVariations(algorithm_name)
-
-            if base not in variations_of:
-                variations_of[base] = []
-            variations_of[base].append(variation)
+        for filename in sorted(os.listdir(base_path)):
+                if not filename.endswith(".js"):
+                    continue
+                
+                if base_name not in variations_of:
+                    variations_of[base_name] = []
+                variations_of[base_name].append(filename[:-3])
 
         result[type_name] = variations_of
 

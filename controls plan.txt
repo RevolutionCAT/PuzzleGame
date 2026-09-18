@@ -1,19 +1,28 @@
-ONLY FOR BARS MODE:
+ONLY FOR BARS MODE YET:
 
 --     will be added (coding: "first letter|number(s) of interaction"):
 
 swap - "s1-2"
 insert - "i1-2"     == insert in between bars 1 and 2. the inserted bar becomes bar #2
+  CANT    insert - "i2"     == insert instead of bar 2   -- insertion sort kind of thing. 
+  or     insert - "r2"    == insert instead of bar 2 - replace bar 2 (r=replace)
+
 pivot - "p3"        == choose bar #3 as a pivot
+  or    key - "k3"     == choose bar #3 as a key OR a pivot
+  or    implement them separately (not too good)
+
 select - "u1-2-3-4"         == (u stands for Unite)     select bars: 1, 2, 3, 4
-split - "l1-2"        == all the bars (before 1) OR (after 2) included are being interacted with, others ignored
-go - "g1"          == e.g. after setting pivot, the algorithm will choose what part it will go to
+split - "l1-2"        == all the bars (before 1) OR (after 2) inclusive are being interacted with, others ignored (do i need it?)
+go - "g1"          == e.g. after setting pivot, the algorithm will choose what part it will go to. shadow action.
+
+create a temporary storage - "x3"  == (x = number) variable (temporary storage) x is now equal to the value of bar 3
+  or     "m3"  == (m stands for Make)
+
+compare - "c1-2"
 
 
 
 --     decide on:
-
-compare - "c1-2"
 create - "mX"    == for fun mode IF NEEDED.  m means Make, X is the value (1-1000+) itself
 
 

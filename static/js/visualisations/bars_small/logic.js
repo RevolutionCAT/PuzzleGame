@@ -48,15 +48,21 @@ export function FindClosestTarget(draggedBarCentre, draggedBar) {
 
 
 export function RearrangeBars(draggedBar, target) {
+    const stateBefore = [...global.currentPuzzle];
+
     const draggedIndex = Number(draggedBar.dataset.index);
+    let playerAction;
 
     if (target.action == "swap") {
         const targetIndex = target.index;
+        playerAction = `s${draggedIndex}-${targetIndex}`;
         [global.currentPuzzle[draggedIndex], global.currentPuzzle[targetIndex]] = [global.currentPuzzle[targetIndex], global.currentPuzzle[draggedIndex]];
     }
     else {
         // how splice work: array.splice(where to start,   how many elements to remove,  insert1, insert2, etc)
         // and it returns the removed elements
+
+        playerAction = `i${draggedIndex}-${target.index}`;
         
         const [moved] = global.currentPuzzle.splice(draggedIndex, 1);
         // the [] when assigning means "de-array" the variable, cus .splice returns the array
@@ -67,6 +73,12 @@ export function RearrangeBars(draggedBar, target) {
     }
 
     RenderPuzzle(global.currentContainer, global.currentPuzzle, global.FuncOnMove);
-    if (global.FuncOnMove)
-        global.FuncOnMove(global.currentPuzzle);
+    global.FuncOnMove(playerAction, stateBefore);
+    
+}
+
+
+export function RestoreState(state) {
+    global.currentPuzzle = [...state];
+    RenderPuzzle(global.currentContainer, global.currentPuzzle, global.FuncOnMove);
 }
