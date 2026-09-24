@@ -1,5 +1,5 @@
-// core.js is the selective core of the game. This is the decision-making part.
-import { GenerateSeed, GeneratePuzzle } from "./engine.js";
+// core.js is the selective core of the game. This is the decision-making part. Uses engine.js to process most decisions
+import { GenerateSeed, GeneratePuzzle, SelectAlgorithm, SelectMode } from "./engine.js";
 
 
 export async function Prepare() {
@@ -23,60 +23,34 @@ export async function Prepare() {
 
     const maxAttempts = 10;
     let attempt = 0;
-    let puzzle;
+    let originalPuzzle;
     let valid;
 
     do {
-        puzzle = GeneratePuzzle(baseSeed, type);
+        originalPuzzle = GeneratePuzzle(baseSeed, type);
         attempt++;
-        valid = IsValid(puzzle, algorithm);
+        valid = IsValid(originalPuzzle, algorithm);
 
         if (!valid) {
             baseSeed = GenerateSeed(baseSeed + `-retry${attempt}`);
             console.log("The puzzle is invalid. Regenerating attempt:", attempt);
         }
+        if (attempt === maxAttempts)
+            throw new Error("Max attempts limit exceeded. Something is likely wrong.");
 
-        if (attempt === maxAttempts) {
-            throw new Error("Max attempts limit exceeded.");
-        }
     } while (!valid);
 
-    const simulationResults = algorithm.Simulate(puzzle);
-    const totalPuzzleDifficulty = simulationResults.puzzleDifficulty + algorithm.recognizability
-    const puzzleSteps = simulationResults.steps;
+    const simulationResults = algorithm.Simulate(originalPuzzle);
+    const totalPuzzleDifficulty = simulationResults.puzzleDifficulty + algorithm.recognizability;
+    const puzzleStepsByIteration = simulationResults.steps;
+    const targetPuzzleStates = simulationResults.targetStates;
 
-    return { puzzle, mode, puzzleSteps, totalPuzzleDifficulty };
+    return { originalPuzzle, targetPuzzleStates, puzzleStepsByIteration, mode, totalPuzzleDifficulty };
 }
 
 
 
-//=================================================Processing===================================================================
-
-function SelectAlgorithm(baseSeed, algorithms) {
-    console.log(algorithms);
-    let all_algorithms = [];
-    const localSeed = GenerateSeed(baseSeed + "-SelectAlgorithm");
-
-    for (const [type, bases] of Object.entries(algorithms)) {
-        for (const [base, variations] of Object.entries(bases)) {
-            for (const variation of variations) {
-                all_algorithms.push({ base, variation, type });
-            }
-        }
-    }
-
-    if (all_algorithms.length === 0) {
-        throw new Error("No algorithms are available. SelectAlgorithm failed.");
-    }
-
-    const index = (localSeed >>> 0) % all_algorithms.length;
-    const selected = all_algorithms[index]; 
-    // return selected;
-    return { base: "BubbleSort", variation: "optimized", type: "sorting" };
-}
-
-
-
+//================================================= Functions ===================================================================
 async function LoadAlgorithm(base, variation, type) {
     console.log(base, variation, type);
     const module = await import(`./algorithms/${type}/${base}/${variation}.js`);
@@ -84,25 +58,13 @@ async function LoadAlgorithm(base, variation, type) {
 }
 
 
-
-function SelectMode(baseSeed, modes) {
-    const localSeed = GenerateSeed(baseSeed+"-SelectMode");
-    const index = localSeed % modes.length;
-    const selected = modes[index];
-    const fakeSelected = "bars_small";
-    //return selected;
-    return fakeSelected;
-}
-
-
-
 function IsValid(puzzle, algorithm, minDifficulty=4) {
     const { puzzleDifficulty } = algorithm.Simulate(puzzle);
-    if (puzzleDifficulty < minDifficulty) {
+    if (puzzleDifficulty < minDifficulty)
         return false;
-    }
     return true;
 }
+
 
 function ChosenDifficulty() {
     return "Normal";
@@ -111,15 +73,15 @@ function ChosenDifficulty() {
 
 //===========================================Visuals==========================================================
 
-export async function ManageVisuals(puzzle, mode, totalPuzzleDifficulty, OnMove) {
-    const container = document.getElementById("puzzle-container");
-    const representation = await LoadRepresentation(mode);
-    representation.RenderPuzzle(container, puzzle, OnMove);
+async function LoadRepresentation(mode) {
+    const representation = await import(`./visualisations/${mode}/Manage.js`);
     return representation;
 }
 
 
-async function LoadRepresentation(mode) {
-    const representation = await import(`./visualisations/${mode}/Manage.js`);
+export async function ManageVisuals(puzzle, mode, totalPuzzleDifficulty, OnMove) {
+    const container = document.getElementById("puzzle-container");
+    const representation = await LoadRepresentation(mode);
+    representation.RenderPuzzle(container, puzzle, OnMove);
     return representation;
 }

@@ -10,9 +10,9 @@ export function RenderPuzzle(container, puzzle, onMove) {
     const containerWidth = container.clientWidth;
     const barCount = puzzle.length;
 
-    const GAP_RATIO = 0.1;
-    const barWidth = containerWidth / (barCount + (barCount - 1) * GAP_RATIO);
-    const gap = barWidth * GAP_RATIO;
+    const gapRatio = 0.1;
+    const barWidth = containerWidth / (barCount + (barCount - 1) * gapRatio);
+    const gap = barWidth * gapRatio;
     const maxValue = Math.max(...puzzle);
 
     container.style.gap = `${gap}px`;
@@ -22,7 +22,6 @@ export function RenderPuzzle(container, puzzle, onMove) {
         container.appendChild(CreateBar(value, barWidth, index, maxValue));
     } 
 }
-
 
 
 function CreateBar(value, width, index, maxValue) {

@@ -1,4 +1,5 @@
 // engine.js is the processing power of the game. It processes things such as generation or RNG.
+
 export function GenerateSeed(str) {
     let hash = 0;
     for (let i = 0; i < str.length; i++) {
@@ -14,7 +15,6 @@ export function GenerateSeed(str) {
     hash ^= hash >>> 13;
     hash = Math.imul(hash, 0xc2b2ae35);
     hash ^= hash >>> 16;
-
     return hash;
 }
 
@@ -40,7 +40,43 @@ export function GeneratePuzzle(baseSeed, type) {
         for (let i = 0; i < puzzleLength; i++) {
             puzzle[i] = Math.ceil((RNG()*10));
         }
-        console.log(puzzle);
+        console.log("Generated puzzle: ", puzzle);
     }
     return puzzle;
+}
+
+
+// ============================================ Selection ===================================================
+export function SelectAlgorithm(baseSeed, algorithms) {
+    console.log("Algorithms: ", algorithms);
+    let all_algorithms = [];
+    const localSeed = GenerateSeed(baseSeed + "-SelectAlgorithm");
+
+    for (const [type, bases] of Object.entries(algorithms)) {
+        for (const [base, variations] of Object.entries(bases)) {
+            for (const variation of variations) {
+                all_algorithms.push({ base, variation, type });
+            }
+        }
+    }
+
+    if (all_algorithms.length === 0) {
+        throw new Error("No algorithms are available. SelectAlgorithm failed.");
+    }
+
+    const index = (localSeed >>> 0) % all_algorithms.length;
+    const selected = all_algorithms[index]; 
+    // return selected;
+    return { base: "BubbleSort", variation: "optimized", type: "sorting" }; // debug
+}
+
+
+
+export function SelectMode(baseSeed, modes) {
+    const localSeed = GenerateSeed(baseSeed+"-SelectMode");
+    const index = localSeed % modes.length;
+    const selected = modes[index];
+    const fakeSelected = "bars_small";
+    //return selected;
+    return fakeSelected;
 }

@@ -1,5 +1,5 @@
 import { dragThreshold, global } from "./globals.js";
-import { FindClosestTarget, RearrangeBars } from "./logic.js";
+import { FindClosestTarget, RearrangeBars } from "./in-game_logic.js";
 
 
 // ========== event listeners ============
@@ -48,7 +48,7 @@ document.addEventListener("pointerup", (event) => {
 })
 
 
-
+// ===================== Functions ==========================
 export function MouseDownOnBar(bar) {
     global.draggedBar = bar;
     global.mouseOffsetX = 0;

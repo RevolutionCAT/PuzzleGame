@@ -4,6 +4,8 @@ export const global = {
     currentContainer: null,
     currentPuzzle: null,
 
+    sideGuessList: null,
+
     draggedBar: null,
 
     mouseOffsetX: 0,

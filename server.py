@@ -49,7 +49,7 @@ def ListAlgorithms():
 
         result[type_name] = variations_of
 
-    print(result)
+    print("Algorithms available: ", result)
     return result
 
 

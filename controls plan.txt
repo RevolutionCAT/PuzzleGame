@@ -1,4 +1,4 @@
-ONLY FOR BARS MODE YET:
+ONLY FOR SMALL BARS MODE YET:
 
 --     will be added (coding: "first letter|number(s) of interaction"):
 
