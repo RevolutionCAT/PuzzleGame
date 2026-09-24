@@ -65,16 +65,15 @@ body {
     right: 3%;
 }
 
-#undo-box {
+#undo-redo-box {
     position: relative;
     bottom: 32.75%;
     left: 3%;
 }
 
 
-
 button {
-    margin: 40px;
+    margin: 30px;
     padding: 10px 20px;
     background-color: #9c9384;
     color: white;
@@ -113,4 +112,53 @@ button:hover {
     background-color: rgb(155, 236, 155);
     border: solid 2px #2c2b2b;
     will-change: transform;
+}
+
+
+
+.bar.move-correct {
+    background-color: #7ee68a;
+}
+
+.bar.move-partial {
+    background-color: #e0e38f;
+}
+.bar.move-wrong {
+    background-color: #7c7b7b;
+}
+
+.bar.base-color {
+    background-color: rgb(155, 199, 236);
+}
+
+
+
+
+.game-end-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.45);
+}
+
+.game-end-popup {
+    min-width: 260px;
+    padding: 28px;
+    text-align: center;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+}
+
+.game-end-popup p {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.game-end-popup button {
+    margin: 22px 0 0;
 }

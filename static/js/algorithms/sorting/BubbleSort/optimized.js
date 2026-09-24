@@ -6,6 +6,7 @@ export function Simulate(original_puzzle) {
     const puzzle_copy = [...original_puzzle]; // copies all the elements into new array 
     let swapped;
     let steps = {};
+    let targetStates = {};
     let puzzleDifficulty = 0.0;
     
 
@@ -22,11 +23,11 @@ export function Simulate(original_puzzle) {
             }
         }
         steps[`i${i}`] = iteration;
+        targetStates[`i${i}`] = [...puzzle_copy];
         if (!swapped) {
             break;
         }
     }
     console.log("steps: ", steps);
-    console.log(puzzle_copy);
-    return {steps, puzzleDifficulty};
+    return {steps, targetStates, puzzleDifficulty};
 }
