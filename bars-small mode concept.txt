@@ -91,7 +91,7 @@ idea 3 (final?):
     that their guess log above gets cleared out, and the next attempt starts from after the first iteration is finished.
 
 - guess limit i believe will be good to have like 6/7/8 attempts - fixed, but it will be chosen later
-  for each algorithm type, but 6-8 is at least for the bars gamemode.
+  for each algorithm type, but 6-8 is at least for the small_bars gamemode.
 
 - i can allow to guess the actual algorithm from the list. 
   - e.g. after the player have made 3 attempts out of their 6-8 attempts.
