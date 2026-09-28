@@ -5,7 +5,7 @@ import { RestoreState } from "./in-game_logic.js";
 export function MarkBars(condition, markedMoves, correctIterationSteps, correctPuzzleState, targetPuzzleState) {
     if (condition === "real" || condition === "main") {
         const bars = [...global.currentContainer.querySelectorAll(".bar")];
-        execute(bars, 10); // t=3 for real(?)     t=0.3 for debug
+        execute(bars, 3); // t=3 for real(?)     t=0.3 for debug
     }
     else if (condition === "side") {
         const bars = [];

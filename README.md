@@ -25,12 +25,12 @@ Whether you're a student learning algorithms, a programmer looking for a daily c
 
 ## Current project stage
 
-The project is in the pre-prototype stage and currently stays in active development. The main focus is on finishing the prototype by adding the key features of the core game logic. 
+The project is in the mid-prototype stage and currently stays in active development. The main focus is on finishing the prototype by adding the key features of the core game logic, and finishing that by a range of QOL updates.
 
 ## Planned features
-- Add the record of the player's moves
-- Comparison of the player's moves with the algorithm's steps
-- Add buttons functionality 
-- Add winning after correct guess and losing after given attempts ran out
+- Bring some of the logic to the server side: logic of Prepare (done), logic of answer checking (next), logic of endgame
+- Add dark theme
+- Add difficulties
+- Rewrite the rendering logic to vue
 - Add more interaction with the puzzle (player controls)
 - Improve existing visuals, add new visual features
