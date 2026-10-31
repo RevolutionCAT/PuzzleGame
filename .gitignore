@@ -1,1 +1,8 @@
+<<<<<<< Updated upstream
 node_modules/
+=======
+node_modules/
+rules ig.txt
+debug.py
+>>>>>>> Stashed changes
+__pycache__/

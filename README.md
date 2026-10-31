@@ -20,7 +20,7 @@ This project originally began as a small idea for a school portfolio. However, a
 
 ## The goal of the project
 
-The goal is to create a game that makes learning and recognising algorithms both challenging and enjoyable while offering a unique daily puzzle for players of all skill levels.
+The goal is to create a game that makes learning and recognising algorithms both challenging and enjoyable while offering a unique daily puzzle for players of different skill levels.
 Whether you're a student learning algorithms, a programmer looking for a daily challenge, or simply someone who enjoys difficult puzzles, Complexxity is designed to make algorithmic thinking engaging and interactive while also keeping it fun and enjoyable.
 
 ## Current project stage
@@ -28,9 +28,21 @@ Whether you're a student learning algorithms, a programmer looking for a daily c
 The project is in the pre-prototype stage and currently stays in active development. The main focus is on finishing the prototype by adding the key features of the core game logic. 
 
 ## Planned features
+<<<<<<< Updated upstream
 - Add the record of the player's moves
 - Comparison of the player's moves with the algorithm's steps
 - Add buttons functionality 
 - Add winning after correct guess and losing after given attempts ran out
-- Add more interaction with the puzzle (player controls)
+=======
+- Fix marking logic
+- Add dark theme
+- Rewrite the rendering logic to vue
 - Improve existing visuals, add new visual features
+- Add more puzzles
+>>>>>>> Stashed changes
+- Add more interaction with the puzzle (player controls)
+- Fully add difficulties
+
+## NOTICE!!!
+To run the game on your computer, you need to install the flask library beforehand! 
+Not all versions will work.
