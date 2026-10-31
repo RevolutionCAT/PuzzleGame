@@ -43,7 +43,7 @@ HOW THEY WILL WORK:
 IMPLEMENTED
 
 - insert:
-IMPLEMENTED PARTIALLY
+IMPLEMENTED (probably fully)
 you will drag the bar in between the bars and it will visually offer you to insert the bar between two bars. 
 same offering as when swapping bars - just a variation of visual.
 when inserted, the right-side bars will move to the right one place (or however the user inserted) and the inserted bar(s) 
@@ -51,7 +51,7 @@ take their initial place.
 
 - pivot:
 visually, a dot will appear above the bar. 
-user will click (where?) and the pivot will be set.
+user will click in a small margin above the bar and the pivot will be set.
 
 - select:
 same select as e.g. in Windows with left click and mouse drag.
