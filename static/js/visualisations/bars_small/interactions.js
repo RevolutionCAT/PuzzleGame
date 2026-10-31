@@ -1,5 +1,5 @@
 import { dragThreshold, global } from "./globals.js";
-import { FindClosestTarget, RearrangeBars } from "./in-game_logic.js";
+import { FindClosestTarget, RearrangeBars } from "./ProcessingCore.js";
 
 
 // ========== event listeners ============
@@ -22,7 +22,7 @@ document.addEventListener("pointermove", (event) => {
 
 
 
-document.addEventListener("pointerup", (event) => {
+document.addEventListener("pointerup", () => {
     if (global.draggedBar === null) 
         return;
 

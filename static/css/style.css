@@ -50,7 +50,7 @@ body {
     margin: 20px auto 0;
 }
 
-#info-box {
+#moves-history-box {
     width: 96%;
     margin: 1%;
     padding: 10px;
@@ -75,7 +75,7 @@ body {
 button {
     margin: 30px;
     padding: 10px 20px;
-    background-color: #9c9384;
+    background-color: #7e7b76;
     color: white;
     border: none;
     cursor: pointer;
@@ -116,19 +116,57 @@ button:hover {
 
 
 
-.bar.move-correct {
+.bar.green {
     background-color: #7ee68a;
 }
-
-.bar.move-partial {
+.bar.yellow {
     background-color: #e0e38f;
 }
-.bar.move-wrong {
+.bar.gray {
     background-color: #7c7b7b;
 }
 
 .bar.base-color {
     background-color: rgb(155, 199, 236);
+}
+
+
+
+
+
+.move-line {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 6px;
+    margin-bottom: 4px;
+    background-color: #bdbbbb;
+    border-radius: 4px;
+}
+
+.move-attempt {
+    min-width: 2em; /* keeps "9." and "10." aligned */
+    font-weight: bold;
+    color: black;
+}
+
+.move-box {
+    padding: 0 8px;
+    height: 20px;
+    line-height: 20px;
+    color: black;
+    border-radius: 3px;
+    white-space: nowrap;
+}
+
+.move-box.green {
+    background-color: #7ee68a;
+}
+.move-box.yellow {
+    background-color: #e0e38f;
+}
+.move-box.gray {
+    background-color: #7c7b7b;
 }
 
 

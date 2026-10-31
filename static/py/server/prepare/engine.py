@@ -1,4 +1,4 @@
-import os, math, importlib
+import os, importlib
 from . import generators
 
 
@@ -125,26 +125,24 @@ def GeneratePuzzleData(algorithm, difficulty, localSeed):
     RNG = generators.mulberry32(localSeed)
 
     lowest, highest = details["puzzle_length"]
-    details["puzzle_length"] = generators.randint(RNG, lowest, highest) #update puzzle length
+    details["puzzle_length"] = generators.Sim_Randint(RNG, lowest, highest) #update puzzle length
     
-    print("LENGTHHHHHHHHHHHHHHHHHHH: ", details["puzzle_length"])
-
-    response = generator(algorithm, details, localSeed) # {puzzle: [], ?target: x, ...}
+    response = generator(algorithm, details, localSeed) # {puzzle: {bar1: x, bar2: y, bar3: z}, ?target: X, ...}
     return response 
 
 
 
 
 def RunSimulation(response, algorithm):
-    print("\nON ENTER TO RunSimulation: ", algorithm, response)
-    puzzle = response["puzzle"]
+    print("ON ENTER TO RunSimulation: ", algorithm, response)
+    puzzle_values = [bar["value"] for bar in response["puzzle"]]
     module_path = f"static.py.algorithms.{algorithm['type']}.{algorithm['name']}.{algorithm['variation']}"
     module = importlib.import_module(module_path)
 
     if not hasattr(module, "Simulate"):
         raise AttributeError(f"Module 'Simulate' in '{module_path}' was not found!")
 
-    return module.Simulate(puzzle)
+    return module.Simulate(puzzle_values)
 
 
 
@@ -159,13 +157,13 @@ def CheckIfValid(simulationResult, difficulty):
 
 
 def GenerateValidPuzzle(algorithm, difficulty, localSeed):
-    for count in range(20):
+    for count in range(200):
         puzzleData = GeneratePuzzleData(algorithm, difficulty, localSeed)
         simulationResult = RunSimulation(puzzleData, algorithm)
         if CheckIfValid(simulationResult, difficulty):
-            return puzzleData, simulationResult, localSeed
+            return puzzleData, simulationResult, localSeed, ChooseDetails(difficulty)["attempts"]
         localSeed = generators.GenerateSeed(f"{localSeed}_{count}")
-    raise TimeoutError(f"No valid puzzle after {20} attempts")
+    raise TimeoutError(f"No valid puzzle after {200} attempts")
 
 
 
