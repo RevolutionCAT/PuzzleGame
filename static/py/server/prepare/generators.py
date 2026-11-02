@@ -1,4 +1,3 @@
-import random, math
 
 
 # Global purpose generators
@@ -40,7 +39,7 @@ def mulberry32(seed):
         return ((t ^ (t >> 14)) & 0xFFFFFFFF) / 4294967296
     return rng
 
-def randint(RNG, lowest, highest): 
+def Sim_Randint(RNG, lowest, highest): 
     return lowest + int(RNG() * (highest - lowest + 1))
 
 
@@ -65,9 +64,11 @@ def sorting(algorithm, details, localSeed):
     name = algorithm["name"] #example of the structure of algorithm argument
     RNG = mulberry32(localSeed+1)
 
-    puzzle = []
-    for _ in range(details["puzzle_length"]):
-        puzzle.append(randint(RNG, 1, 10))
+    puzzle = []     # [{"index": "bar1", "value": 6}, {"index": "bar2", "value": 8}]
+    for i in range(details["puzzle_length"]):
+        bar = "bar"+f"{i}" #bar1, bar2, bar3. . .
+        value = Sim_Randint(RNG, 1, 10)
+        puzzle.append({"index": bar, "value": value})
 
     return {
         "puzzle": puzzle,
@@ -81,12 +82,13 @@ def searching(algorithm, details, localSeed):
     RNG = mulberry32(localSeed+2)
 
 
-    puzzle = []
+    puzzle = {}
     
-    for _ in range(0, details["puzzle_length"]):
-        puzzle.append(randint(RNG, 0, 10))
+    for i in range(0, details["puzzle_length"]):
+        bar = "bar"+f"{i}"
+        puzzle[bar] = Sim_Randint(RNG, 0, 10)
 
-    target = randint(RNG, 0, details["puzzle_length"])
+    target = Sim_Randint(RNG, 0, details["puzzle_length"]) #this is wrong since i changed what <puzzle> is
     return {
         "puzzle": puzzle,
         "target": target

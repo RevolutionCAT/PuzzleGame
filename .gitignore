@@ -1,2 +1,4 @@
 node_modules/
-static/js/old main.js
+rules ig.txt
+debug.py
+__pycache__/
