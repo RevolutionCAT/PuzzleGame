@@ -1,4 +1,4 @@
-
+import { EndGame } from "./general/GameEnd.js";
 
 
 //===================================== Visuals =======================================
@@ -13,6 +13,16 @@ export async function ManageVisuals(puzzle, mode, totalPuzzleDifficulty, OnMove)
     const representation = await LoadRepresentation(mode);
     representation.RenderPuzzle(container, puzzle, OnMove);
     return representation;
+}
+
+
+async function RequestPuzzle(difficulty) {
+    const response = await fetch(`/api/today_puzzle/${difficulty}`);
+    const response_json = await response.json();
+    const data = response_json.response;
+    console.log("Server response: ", data);
+
+    return { puzzle: data["puzzle"], gameMode: data["mode"], puzzleDifficulty: data["puzzleDifficulty"] };
 }
 
 
@@ -37,19 +47,14 @@ async function RequestMarking(difficulty, currentIteration, currentPuzzleState, 
 // ================================ Actual game ================================================
 
 async function Game() {
-    const difficulty = "medium";
+    let difficulty = "medium";
     let currentIteration = 0;
     let attempt = 0;
-    const response = await fetch(`/api/today_puzzle/${difficulty}`);
-    const response_json = await response.json();
-    const data = response_json.response;
-    console.log("Server response: ", data);
 
-    const puzzle = data["puzzle"]
-    const gameMode = data["mode"]
-    const puzzleDifficulty = data["puzzleDifficulty"]
-    
-    const representation = await ManageVisuals(puzzle, gameMode, puzzleDifficulty, OnMove); // e.g. - bars_small
+
+    let {puzzle, gameMode, puzzleDifficulty} = await RequestPuzzle(difficulty);
+    let representation = await ManageVisuals(puzzle, gameMode, puzzleDifficulty, OnMove); // e.g. - bars_small
+
 
     let redoMovesList = [];
     let currentPlayerMoves = [];
@@ -58,6 +63,7 @@ async function Game() {
     representation.global.initialPuzzle = [...puzzle];
     let submitting = false;
 
+
     function ResetHistory(startState) {
         // reset all current data
         redoMovesList = [];
@@ -65,6 +71,8 @@ async function Game() {
         currentPuzzleHistory = [[...startState]];
         playerMovesPointer = 0;
     }
+
+
 
     // ======================================== User Interaction ==========================================================
     function OnMove(action, currentState) {
@@ -144,44 +152,55 @@ async function Game() {
     document.getElementById("redo-button").addEventListener("click", () => {
         OnRedo();
     });
+
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        ToggleTheme();
+    })
+
+    // =================== ПЕРЕНЕСТИ ОТСЮДА В ДРУГОЙ ФАЙЛ КОГДА ДОБАВЛЮ МЕНЮ =============================
+    // ТАКЖЕ ИЗМЕНИТЬ ЛОГИКУ И ОСТАВИТЬ ЗАПРОС ПАЗЛА КАК БЫЛО. БЕЗ МЕНЮ ЭТО ЧИСТО ДЛЯ ТЕСТА.
+
+    document.getElementById("difficulty-button").addEventListener("click", async () => {
+        ({ difficulty, puzzle, gameMode, puzzleDifficulty } = await ChangeDifficulty(difficulty));
+        representation = await ManageVisuals(puzzle, gameMode, puzzleDifficulty, OnMove);
+        representation.global.initialPuzzle = [...puzzle];
+
+        attempt = 0;
+        currentIteration = 0;
+        ResetHistory(puzzle);
+        document.getElementById("moves-history-box").innerHTML = "";
+    });
+}
+
+Game();
+
+
+
+async function ChangeDifficulty(difficulty) {
+    const newDifficulty = difficulty === "medium" ? "insane" : "medium";
+    document.cookie = `difficulty=${newDifficulty}; path=/; SameSite=Lax`;
+    difficulty = document.cookie.split("; ").find(cookie => cookie.startsWith("difficulty="))?.split("=")[1];
+    console.log(difficulty);    
+
+    const {puzzle, gameMode, puzzleDifficulty} = await RequestPuzzle(difficulty);
+
+    return { difficulty: difficulty, puzzle: puzzle, gameMode: gameMode, puzzleDifficulty: puzzleDifficulty };
 }
 
 
-Game()
 
+function ToggleTheme() {
+    const root = document.documentElement;
 
+    const isDark = root.dataset.theme === "dark";
+    if (isDark) {
+        delete root.dataset.theme;
+        root.setItem("theme", "light");
+        
+    }
+    else {
+        root.dataset.theme = "dark";
+        localStorage.setItem("theme", 'dark');
+    }
 
-
-
-
-// ============================================ Game results ======================================================
-function EndGame(data) {
-    // user cant click any button
-    document.getElementById("submit-button").disabled = true;
-    document.getElementById("undo-button").disabled = true;
-    document.getElementById("redo-button").disabled = true;
-    document.getElementById("puzzle-container").style.pointerEvents = "none";
-
-    // exit if already exist. error check
-    if (document.getElementById("game-end-popup")) return;
-
-    // creating pop-up
-    const popUp = document.createElement("div");
-    popUp.id = "game-end-popup";
-    popUp.className = "game-end-overlay";
-
-    // pop-up code
-    popUp.innerHTML = `
-            <div class="game-end-popup" role="dialog" aria-modal="true">
-                <p>${data["text"]}</p>
-                <button type="button" id="close-game-end-popup">Close</button>
-            </div>
-        `;
-
-    document.body.appendChild(popUp);
-    document.getElementById("close-game-end-popup").addEventListener("click", () => {
-        popUp.remove()
-    });
-
-    console.log(`Game ended and the player ${data["result"]}.`)
 }

@@ -28,21 +28,13 @@ Whether you're a student learning algorithms, a programmer looking for a daily c
 The project is in the pre-prototype stage and currently stays in active development. The main focus is on finishing the prototype by adding the key features of the core game logic. 
 
 ## Planned features
-<<<<<<< Updated upstream
-- Add the record of the player's moves
-- Comparison of the player's moves with the algorithm's steps
-- Add buttons functionality 
-- Add winning after correct guess and losing after given attempts ran out
-=======
-- Fix marking logic
-- Add dark theme
+
 - Rewrite the rendering logic to vue
 - Improve existing visuals, add new visual features
 - Add more puzzles
->>>>>>> Stashed changes
 - Add more interaction with the puzzle (player controls)
 - Fully add difficulties
 
 ## NOTICE!!!
 To run the game on your computer, you need to install the flask library beforehand! 
-Not all versions will work.
+Not all versions of the game will work correctly.
