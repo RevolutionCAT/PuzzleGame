@@ -131,8 +131,7 @@ def CheckExceptions(markedObjectsRaw, barsID, huntResults, correctMoves, require
     
     for obj in barsID:
         if (requiredCounts[obj] > 0 and correctCounts[obj] == requiredCounts[obj]
-            and currentPositions.get(obj) == targetPositions.get(obj) and markedObjectsRaw[obj] == "gray"
-            and obj not in wrongObjects):
+            and currentPositions.get(obj) == targetPositions.get(obj) and markedObjectsRaw[obj] == "gray"): #and obj not in wrongObjects
             markedObjectsRaw[obj] = "yellow"
     
     # Bars that were never involved in any required or incorrect move
@@ -161,8 +160,6 @@ def MarkObjects(difficulty, huntResults, markedMoves, playerMoves, correctMoves,
         for obj in [move["objects"]["main"], *move["objects"]["additional"]]:
             requiredCounts[obj] += 1
 
-
-
     wrongObjects = set()
     for i in range(len(playerMoves)):
         consideredObjects = [playerMoves[i]["objects"]["main"], *playerMoves[i]["objects"]["additional"]]
@@ -173,6 +170,8 @@ def MarkObjects(difficulty, huntResults, markedMoves, playerMoves, correctMoves,
                 marks = ["gray"] * len(consideredObjects)
                 wrongObjects.update(consideredObjects)
             else:
+                for obj in consideredObjects:
+                    correctCounts[obj] += 1
                 marks = [
                     "green" if i in huntResults["greenMoves"] else "yellow"
                     for obj in consideredObjects
